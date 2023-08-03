@@ -4,14 +4,14 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
-    var number: Double = 0.0
-    var num1: Double = 0.0
-    var operator: Int = 0
-    lateinit var txtNum1: TextView
-    lateinit var txtNum2: TextView
+    private var num1: Double = 0.0
+    private var operator: Int = 0
+    private lateinit var txtNum1: TextView
+    private lateinit var txtNum2: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +19,37 @@ class MainActivity : AppCompatActivity() {
 
         txtNum1 = findViewById(R.id.textView1)
         txtNum2 = findViewById(R.id.textView2)
+
+        val btnClear: Button = findViewById(R.id.btnClear)
+        val btnEqual: Button = findViewById(R.id.btnEqual)
+
+        btnEqual.setOnClickListener{
+            val num2: Double = txtNum2.text.toString().toDouble()
+            var result = 0.0
+
+            when(operator) {
+                1 -> result = num1 + num2
+                2 -> result = num1 - num2
+                3 -> result = num1 * num2
+                4 -> {
+                    result = if (num2 == 0.0) {
+                        0.0
+                    } else {
+                        num1/num2
+                    }
+                }
+            }
+
+            txtNum2.text = result.toString()
+            txtNum1.text = ""
+        }
+
+        btnClear.setOnClickListener{
+            txtNum1.text = ""
+            txtNum2.text = ""
+            num1 = 0.0
+            operator = 0
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -51,19 +82,19 @@ class MainActivity : AppCompatActivity() {
 
         when(view.id) {
             R.id.btnAdd -> {
-                txtNum1.text = "$num2Text+"
+                txtNum1.text = "$num2Text +"
                 operator = 1
             }
             R.id.btnMinus -> {
-                txtNum1.text = "$num2Text-"
+                txtNum1.text = "$num2Text -"
                 operator = 2
             }
             R.id.btnMultiply -> {
-                txtNum1.text = num2Text + "x"
+                txtNum1.text = "$num2Text x"
                 operator = 3
             }
             R.id.btnDivide -> {
-                txtNum1.text = "$num2Text/"
+                txtNum1.text = "$num2Text ÷"
                 operator = 4
             }
         }
