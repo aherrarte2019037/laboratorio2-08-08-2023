@@ -17,16 +17,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Initialize references to TextViews
         txtNum1 = findViewById(R.id.textView1)
         txtNum2 = findViewById(R.id.textView2)
 
+        // Initialize buttons
         val btnClear: Button = findViewById(R.id.btnClear)
         val btnEqual: Button = findViewById(R.id.btnEqual)
 
+        // Set click listener for the Equal button
         btnEqual.setOnClickListener{
             val num2: Double = txtNum2.text.toString().toDouble()
             var result = 0.0
 
+            // Perform the operation based on the selected operator
             when(operator) {
                 1 -> result = num1 + num2
                 2 -> result = num1 - num2
@@ -40,10 +44,12 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+            // Display the result and reset the input
             txtNum2.text = result.toString()
             txtNum1.text = ""
         }
 
+        // Set click listener for the Clear button
         btnClear.setOnClickListener{
             txtNum1.text = ""
             txtNum2.text = ""
@@ -56,6 +62,7 @@ class MainActivity : AppCompatActivity() {
     fun pressDigit(view: View) {
         val num2 = txtNum2.text.toString()
 
+        // Append the selected digit to the current number
         when(view.id) {
             R.id.btn0 -> txtNum2.text = num2 + "0"
             R.id.btn1 -> txtNum2.text = num2 + "1"
@@ -76,10 +83,11 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun pressOperator(view: View) {
-         num1 = txtNum2.text.toString().toDouble()
+        num1 = txtNum2.text.toString().toDouble()
         val num2Text: String = txtNum2.text.toString()
         txtNum2.text = ""
 
+        // Set the operator based on the button clicked
         when(view.id) {
             R.id.btnAdd -> {
                 txtNum1.text = "$num2Text +"
